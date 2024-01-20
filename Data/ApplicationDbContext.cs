@@ -18,5 +18,6 @@ namespace DotNetCore8Api.Data
         }
 
         public DbSet<Product> Product { get; set; } 
+        public DbSet<Customer> Customers { get; set; }
     }
 }

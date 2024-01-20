@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace DotNetCore8Api.Models
 {
@@ -10,6 +11,7 @@ namespace DotNetCore8Api.Models
         public string ProductName { get; set; }
         public string? ProductDescription { get; set; }
         [Required]
+        [Precision(18, 2)]
         public decimal ProductPrice { get; set; }
         public int? ProductStock { get; set; }
     }
