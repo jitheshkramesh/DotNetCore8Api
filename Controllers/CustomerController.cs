@@ -1,6 +1,7 @@
 ﻿using DotNetCore8Api.Data;
 using DotNetCore8Api.DTo;
 using DotNetCore8Api.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ namespace DotNetCore8Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CustomerController : ControllerBase
     {
         private ApplicationDbContext _dbContext;

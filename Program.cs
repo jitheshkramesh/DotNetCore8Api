@@ -1,4 +1,5 @@
 using DotNetCore8Api.Data;
+using DotNetCore8Api.Exceptions;
 using DotNetCore8Api.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
@@ -32,8 +33,8 @@ builder.Services.AddCors(opt =>
 var conStr = builder.Configuration.GetConnectionString("connStr");
 builder.Services.AddSqlServer<ApplicationDbContext>(conStr);
 
-builder.Services.AddTransient<ExceptionHandlerMiddleware>();
- 
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 // For Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -75,6 +76,8 @@ builder.Host.UseSerilog();
 
 var app = builder.Build();
 
+//app.UseMiddleware<ExceptionHandlerMiddleware>();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -84,13 +87,16 @@ if (app.Environment.IsDevelopment())
 
 app.UseSerilogRequestLogging();
 
-app.UseMiddleware<ExceptionHandlerMiddleware>();
+//app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 app.UseCors(_policyName);
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+//app.UseMiddleware<ExceptionHandlerMiddleware>();
+app.UseExceptionHandler();
 
 app.MapControllers(); 
 
