@@ -3,7 +3,8 @@ using DotNetCore8Api.DTo;
 using DotNetCore8Api.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore; 
+using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 namespace DotNetCore8Api.Controllers
 {
@@ -36,14 +37,21 @@ namespace DotNetCore8Api.Controllers
             }
 
             var customerDto = new CustomerDTo()
-            { 
+            {
                 firstName = customer.firstName,
                 lastName = customer.lastName,
-                birthDate = customer.birthDate ,
-                email=customer.email,
-                gender=customer.gender
+                email = customer.email,
+                zipcode = customer.zipcode,
+
+                phone = customer.phone,
+                birthDate = customer.birthDate,
+                city = customer.city,
+                state = customer.state,
+                country = customer.country,
+                gender = customer.gender,
             };
 
+            Log.Information("Customer GetCustomer {@customer}", customer);
             //var municipioDto = MunicipioAdto(municipio);
             return customerDto;
         }
@@ -78,6 +86,8 @@ namespace DotNetCore8Api.Controllers
                 };
                 _dbContext.Customers.Add(customer);
                 await _dbContext.SaveChangesAsync();
+
+                Log.Information("Customer Create {@customer}", customer);
 
                 return CreatedAtAction("GetCustomer", new { id = customer.Id }, customer);
 
@@ -114,6 +124,8 @@ namespace DotNetCore8Api.Controllers
 
             _dbContext.Customers.Update(customer);
             await _dbContext.SaveChangesAsync();
+
+            Log.Information("Customer Put {@customer}", customer);
 
             //var municipioDto = MunicipioAdto(municipio);
             return true;

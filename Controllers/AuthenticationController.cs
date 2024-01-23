@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -121,12 +122,14 @@ namespace DotNetCore8Api.Controllers
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
 
+                Log.Information("Login successfully {@user}",user);
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token)
                 });
                 //return Ok(new Response { Status = "Success", Message = "Login successfully." });
             }
+            Log.Information("Login Unauthorized");
             return Unauthorized();
         }
 

@@ -1,0 +1,72 @@
+2024-01-23 11:51:27.910 +05:30 [INF] Request starting HTTP/2 OPTIONS https://localhost:7251/api/Authentication/Login - null null
+2024-01-23 11:51:27.932 +05:30 [INF] CORS policy execution successful.
+2024-01-23 11:51:27.933 +05:30 [INF] HTTP OPTIONS /api/Authentication/Login responded 204 in 0.7827 ms
+2024-01-23 11:51:27.933 +05:30 [INF] Request finished HTTP/2 OPTIONS https://localhost:7251/api/Authentication/Login - 204 null null 62.9339ms
+2024-01-23 11:51:27.936 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7251/api/Authentication/Login - application/json 57
+2024-01-23 11:51:27.940 +05:30 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> System.ArgumentException: IDX14102: Unable to decode the header '[PII of type 'Microsoft.IdentityModel.Logging.SecurityArtifact' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]' as Base64Url encoded string.
+ ---> System.ArgumentOutOfRangeException: Specified argument was out of the range of valid values. (Parameter 'IDX10820: Invalid character found in Base64UrlEncoding. Character: '58', Encoding: '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.')
+   at Microsoft.IdentityModel.Tokens.Base64UrlEncoding.Decode(String input, Int32 offset, Int32 length, Byte[] output)
+   at Microsoft.IdentityModel.Tokens.Base64UrlEncoding.Decode[T](String input, Int32 offset, Int32 length, Func`3 action)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.CreateClaimSet(String rawString, Int32 startIndex, Int32 length, Func`3 action)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   --- End of inner exception stack trace ---
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2024-01-23 11:51:27.942 +05:30 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2024-01-23 11:51:27.942 +05:30 [INF] CORS policy execution successful.
+2024-01-23 11:51:27.943 +05:30 [INF] Executing endpoint 'DotNetCore8Api.Controllers.AuthenticationController.Login (DotNetCore8Api)'
+2024-01-23 11:51:27.943 +05:30 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(DotNetCore8Api.Models.LoginModel) on controller DotNetCore8Api.Controllers.AuthenticationController (DotNetCore8Api).
+2024-01-23 11:51:27.979 +05:30 [INF] Executed DbCommand (6ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='12000']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[FirstName], [a].[LastName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0
+2024-01-23 11:51:28.111 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='12000']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2024-01-23 11:51:28.111 +05:30 [INF] Login successfully {"FirstName":"string","LastName":"string","Id":"0900f2b9-7a44-4e65-b470-259ad7954a57","UserName":"jitheshkramesh15","NormalizedUserName":"JITHESHKRAMESH15","Email":"jitheshkramesh@gmail.com","NormalizedEmail":"JITHESHKRAMESH@GMAIL.COM","EmailConfirmed":false,"PasswordHash":"AQAAAAIAAYagAAAAECyAslBZR5rVksBaHOm5mT2E90wFPYayYw9u43MclfOY9cDtSEENgLdCW6J9Pl+Qmw==","SecurityStamp":"3KM45IQUNRLUNK7OJ35J7IBAEFF426B5","ConcurrencyStamp":"2f2cd1e2-6c1c-4ea0-99a3-819477be56be","PhoneNumber":null,"PhoneNumberConfirmed":false,"TwoFactorEnabled":false,"LockoutEnd":null,"LockoutEnabled":true,"AccessFailedCount":0,"$type":"ApplicationUser"}
+2024-01-23 11:51:28.113 +05:30 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2024-01-23 11:51:28.113 +05:30 [INF] Executed action DotNetCore8Api.Controllers.AuthenticationController.Login (DotNetCore8Api) in 169.858ms
+2024-01-23 11:51:28.113 +05:30 [INF] Executed endpoint 'DotNetCore8Api.Controllers.AuthenticationController.Login (DotNetCore8Api)'
+2024-01-23 11:51:28.113 +05:30 [INF] HTTP POST /api/Authentication/Login responded 200 in 170.9290 ms
+2024-01-23 11:51:28.114 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7251/api/Authentication/Login - 200 437 application/json; charset=utf-8 178.3065ms
+2024-01-23 11:51:31.235 +05:30 [INF] Request starting HTTP/2 OPTIONS https://localhost:7251/api/Customer - null null
+2024-01-23 11:51:31.235 +05:30 [INF] CORS policy execution successful.
+2024-01-23 11:51:31.235 +05:30 [INF] HTTP OPTIONS /api/Customer responded 204 in 0.1657 ms
+2024-01-23 11:51:31.235 +05:30 [INF] Request finished HTTP/2 OPTIONS https://localhost:7251/api/Customer - 204 null null 0.949ms
+2024-01-23 11:51:31.239 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7251/api/Customer - null null
+2024-01-23 11:51:31.240 +05:30 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+ ---> System.ArgumentException: IDX14102: Unable to decode the header '[PII of type 'Microsoft.IdentityModel.Logging.SecurityArtifact' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]' as Base64Url encoded string.
+ ---> System.ArgumentOutOfRangeException: Specified argument was out of the range of valid values. (Parameter 'IDX10820: Invalid character found in Base64UrlEncoding. Character: '58', Encoding: '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.')
+   at Microsoft.IdentityModel.Tokens.Base64UrlEncoding.Decode(String input, Int32 offset, Int32 length, Byte[] output)
+   at Microsoft.IdentityModel.Tokens.Base64UrlEncoding.Decode[T](String input, Int32 offset, Int32 length, Func`3 action)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.CreateClaimSet(String rawString, Int32 startIndex, Int32 length, Func`3 action)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   --- End of inner exception stack trace ---
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(String encodedJson)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+   --- End of inner exception stack trace ---
+2024-01-23 11:51:31.240 +05:30 [INF] Bearer was not authenticated. Failure message: IDX14100: JWT is not well formed, there are no dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EndcodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2024-01-23 11:51:31.240 +05:30 [INF] CORS policy execution successful.
+2024-01-23 11:51:31.240 +05:30 [INF] Executing endpoint 'DotNetCore8Api.Controllers.CustomerController.Get (DotNetCore8Api)'
+2024-01-23 11:51:31.241 +05:30 [INF] Route matched with {action = "Get", controller = "Customer"}. Executing controller action with signature System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[DotNetCore8Api.Models.Customer]] Get() on controller DotNetCore8Api.Controllers.CustomerController (DotNetCore8Api).
+2024-01-23 11:51:31.249 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='12000']
+SELECT [c].[Id], [c].[CreatedDate], [c].[CreatedId], [c].[UpdatedDate], [c].[UpdatedId], [c].[birthDate], [c].[city], [c].[country], [c].[email], [c].[firstName], [c].[gender], [c].[lastName], [c].[phone], [c].[state], [c].[zipcode]
+FROM [Customers] AS [c]
+ORDER BY [c].[Id] DESC
+2024-01-23 11:51:31.251 +05:30 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[DotNetCore8Api.Models.Customer, DotNetCore8Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-01-23 11:51:31.253 +05:30 [INF] Executed action DotNetCore8Api.Controllers.CustomerController.Get (DotNetCore8Api) in 12.751ms
+2024-01-23 11:51:31.254 +05:30 [INF] Executed endpoint 'DotNetCore8Api.Controllers.CustomerController.Get (DotNetCore8Api)'
+2024-01-23 11:51:31.254 +05:30 [INF] HTTP GET /api/Customer responded 200 in 13.4027 ms
+2024-01-23 11:51:31.254 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7251/api/Customer - 200 8240 application/json; charset=utf-8 15.4075ms

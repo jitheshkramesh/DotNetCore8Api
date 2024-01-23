@@ -1,8 +1,11 @@
 using DotNetCore8Api.Data;
 using DotNetCore8Api.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
+using System.Net;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +31,8 @@ builder.Services.AddCors(opt =>
 
 var conStr = builder.Configuration.GetConnectionString("connStr");
 builder.Services.AddSqlServer<ApplicationDbContext>(conStr);
+
+builder.Services.AddTransient<ExceptionHandlerMiddleware>();
  
 
 // For Identity
@@ -61,6 +66,13 @@ builder.Services.AddAuthentication(option =>
         };
     });
 
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .WriteTo.File("LogFile/log-.txt",rollingInterval:RollingInterval.Hour)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -70,12 +82,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseSerilogRequestLogging();
+
+app.UseMiddleware<ExceptionHandlerMiddleware>();
+
 app.UseCors(_policyName);
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapControllers();
+app.MapControllers(); 
 
 app.Run();
