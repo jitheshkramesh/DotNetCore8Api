@@ -17,14 +17,13 @@ namespace DotNetCore8Api.Controllers
         private ApplicationDbContext _dbContext;
         public ProductsController(ApplicationDbContext dbContext)
         {
-            _dbContext= dbContext;
+            _dbContext = dbContext;
         }
 
         [HttpGet]
         public async Task<List<Product>> Get()
         {
             return await _dbContext.Product.ToListAsync();
-            
         }
     }
 }

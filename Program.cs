@@ -1,6 +1,8 @@
 using DotNetCore8Api.Data;
 using DotNetCore8Api.Exceptions;
 using DotNetCore8Api.Models;
+using DotNetCore8Api.Services;
+using DotNetCore8Api.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Identity;
@@ -101,6 +103,9 @@ builder.Services.AddSwaggerGen(option =>
 });
 
 builder.Services.AddAuthorization();
+
+builder.Services.AddScoped<IFanService, FanService>();
+builder.Services.AddHttpClient<IFanService,FanService>();
 
 var app = builder.Build();
 
