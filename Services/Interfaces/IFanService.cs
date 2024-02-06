@@ -4,6 +4,6 @@ namespace DotNetCore8Api.Services.Interfaces
 {
     public interface IFanService
     {
-        Task<List<Fan>> GetFans();
+        Task<List<Fan>?> GetFans();
     }
 }

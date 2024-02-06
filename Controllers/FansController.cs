@@ -18,7 +18,11 @@ namespace DotNetCore8Api.Controllers
         public async Task<IActionResult> Get()
         {
             var fans = await _fanService.GetFans();
-            return Ok(fans);
+
+            if (fans.Any())
+                return Ok(fans);
+
+            return NotFound();
         }
     }
 }

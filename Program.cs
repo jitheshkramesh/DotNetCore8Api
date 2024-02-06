@@ -1,3 +1,4 @@
+using DotNetCore8Api.Configuration;
 using DotNetCore8Api.Data;
 using DotNetCore8Api.Exceptions;
 using DotNetCore8Api.Models;
@@ -106,6 +107,7 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddScoped<IFanService, FanService>();
 builder.Services.AddHttpClient<IFanService,FanService>();
+builder.Services.Configure<ApiServiceConfig>(builder.Configuration.GetSection("ApiServiceConfig"));
 
 var app = builder.Build();
 
