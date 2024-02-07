@@ -14,7 +14,7 @@ namespace DotNetCore8Api.Controllers
     [Authorize]
     public class CustomerController : ControllerBase
     {
-        private ApplicationDbContext _dbContext;
+        private readonly ApplicationDbContext _dbContext;
         public CustomerController(ApplicationDbContext dbContext)
         {
             _dbContext=dbContext;
