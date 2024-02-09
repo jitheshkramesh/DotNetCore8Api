@@ -9,7 +9,7 @@ namespace DotNetCore8Api.Services
     public class EmployeeRepository : IEmployeeRepository
     {
         private readonly ApplicationDbContext _context;
-         
+
 
         public EmployeeRepository(ApplicationDbContext dbContext)
         {
@@ -23,27 +23,43 @@ namespace DotNetCore8Api.Services
         }
         //This method will return one Employee's information from the Employee table
         //based on the EmployeeID which it received as an argument
-        public Employee GetById(int EmployeeID)
+        public async Task<Employee> GetById(int EmployeeID)
         {
-            return _context.Employees.Find(EmployeeID);
+            return await _context.Employees.FindAsync(EmployeeID);
         }
         //This method will Insert one Employee object into the Employee table
         //It will receive the Employee object as an argument which needs to be inserted into the database
-        public void Insert(Employee employee)
+        public async Task<Employee> Insert(Employee employee)
         {
             //The State of the Entity is going to be Added State
-            _context.Employees.Add(employee);
+            _context.Employees.AddAsync(employee);
+            await _context.SaveChangesAsync();
+            return employee;
         }
         //This method is going to update the Employee data in the database
         //It will receive the Employee object as an argument
-        public void Update(Employee employee)
+        public async Task<Employee> Update(Employee employee)
         {
             //It will mark the Entity State as Modified
-            _context.Entry(employee).State = EntityState.Modified;
+            //_context.Entry(employee).State = EntityState.Modified;
+
+            var EmployeeEdit = _context.Employees.Where(x => x.Id == employee.Id).First();
+            if (EmployeeEdit != null)
+            {
+                EmployeeEdit.Dept = employee.Dept;
+                EmployeeEdit.Gender = employee.Gender;
+                EmployeeEdit.Name = employee.Name;
+                EmployeeEdit.Salary = employee.Salary;
+                EmployeeEdit.UpdatedId = employee.UpdatedId;
+                EmployeeEdit.UpdatedDate = DateTime.Now;
+                await _context.SaveChangesAsync();
+                return EmployeeEdit;
+            }
+            return employee;
         }
         //This method is going to remove the Employee Information from the Database
         //It will receive the EmployeeID as an argument whose information needs to be removed from the database
-        public void Delete(int EmployeeID)
+        public async Task<bool> Delete(int EmployeeID)
         {
             //First, fetch the Employee details based on the EmployeeID id
             Employee employee = _context.Employees.Find(EmployeeID);
@@ -52,7 +68,10 @@ namespace DotNetCore8Api.Services
             {
                 //This will mark the Entity State as Deleted
                 _context.Employees.Remove(employee);
+                await _context.SaveChangesAsync();
+                return true;
             }
+            return false;
 
         }
         //This method will make the changes permanent in the database
@@ -88,6 +107,6 @@ namespace DotNetCore8Api.Services
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-         
+
     }
 }

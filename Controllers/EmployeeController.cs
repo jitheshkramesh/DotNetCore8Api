@@ -26,10 +26,10 @@ namespace DotNetCore8Api.Controllers
                 if (result.Any())
                 {
                     return Ok(result);
-                    
+
                 }
                 return NotFound();
-                
+
             }
             catch (Exception)
             {
@@ -37,10 +37,36 @@ namespace DotNetCore8Api.Controllers
                     "Error retrieving data from the database");
             }
         }
-        //[HttpGet]
-        //public async Task<List<Employee>> GetEmployees()
-        //{
-        //    return (List<Employee>)await _employeeRepository.GetAll(); 
-        //}
+
+        [HttpGet("GetEmployees")]
+        public async Task<List<Employee>> GetEmployees()
+        {
+            return (List<Employee>)await _employeeRepository.GetAll();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Post(Employee employee)
+        {
+            try
+            {
+                return Ok(await _employeeRepository.Insert(employee));
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+           
+        }
+
+        [HttpPut]
+        public async Task<Employee> Put(Employee employee)
+        {
+            return await _employeeRepository.Update(employee);
+        }
+        [HttpDelete]
+        public async Task<bool> Delete(int Id)
+        {
+            return await _employeeRepository.Delete(Id);
+        }
     }
 }

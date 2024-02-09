@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization>false</InvariantGlobalization>
 	  <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-	  <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+	  <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute> 
   </PropertyGroup>
 
   <ItemGroup>
@@ -34,6 +34,11 @@
 
   <ItemGroup>
     <Folder Include="LogFile\" />
+	  <InternalsVisibleTo Include="DotNetCore8.xUnitTests"/>
   </ItemGroup>
+
+	<PropertyGroup>
+		<PreserveCompilationContext>true</PreserveCompilationContext>
+	</PropertyGroup>
 
 </Project>

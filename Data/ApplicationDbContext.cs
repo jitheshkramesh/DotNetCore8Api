@@ -9,7 +9,7 @@ namespace DotNetCore8Api.Data
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            this.Database.SetCommandTimeout(12000);
+           // this.Database.SetCommandTimeout(12000);
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

@@ -27,6 +27,13 @@ namespace DotNetCore8Api.Controllers
 
         }
 
+        [HttpGet("GetAllAsync")]
+        public async Task<IActionResult> GetAllStudentsAsync()
+        {
+            var value = await _dbContext.Customers.OrderByDescending(c => c.Id).ToListAsync();
+            return Ok(value);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<CustomerDTo>> GetCustomer(int id)
         {
